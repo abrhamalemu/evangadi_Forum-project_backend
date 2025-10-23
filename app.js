@@ -16,11 +16,13 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.json({ response: "success" });
 });
-
+dotenv.config();
 app.use("/api/user", userRouter);
 app.use("/api/question", authMiddlewares, questionRouter);
 app.use("/api/answer", authMiddlewares, answerRouter);
 
+const PORT = process.env.PORT || 10000;
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
 const start = async () => {
   try {
     const result = await db.execute("select 'databaseConnected'");
